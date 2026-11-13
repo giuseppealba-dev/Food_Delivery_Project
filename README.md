@@ -122,6 +122,10 @@ principale si trova in `fd_backend/db/database.sqlite`.
 Il progetto include anche il file `fd_backend/db/utenti_db.csv`, utilizzato
 come supporto per i dati locali del progetto.
 
+Il database locale e il CSV degli utenti sono esclusi dal repository per
+evitare di pubblicare dati di test o personali. All'avvio, il backend crea
+automaticamente la struttura delle tabelle tramite `fd_backend/db/new_database.js`.
+
 ## Build del frontend
 
 Per creare la build del frontend:
