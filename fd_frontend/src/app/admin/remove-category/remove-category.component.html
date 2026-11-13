@@ -1,0 +1,65 @@
+<div class="container">
+  <!-- Pulsante Torna indietro -->
+  <div class="back-button-container">
+    <ion-button fill="solid" color="medium" (click)="goBackToGestione()">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Torna Indietro
+    </ion-button>
+  </div>
+
+  <div class="header">
+    <h2>Rimuovi Categorie</h2>
+    <p class="warning-text">ATTENZIONE: Rimuovendo una categoria verranno eliminati anche tutti i prodotti associati!</p>
+  </div>
+
+  <!-- Lista delle categorie -->
+  @if (!isLoading && categories.length > 0) {
+  <ion-list>
+    @for (category of categories; track $index) {
+    <ion-item>
+      <ion-label>
+        <h3>{{ category.nome_categoria }}</h3>
+        <p>ID: {{ category.ID_categoria || category.id_categoria || 'Non disponibile' }}</p>
+        <!-- <p>Debug: {{ category | json }}</p> -->
+      </ion-label>
+      <ion-button 
+        color="danger" 
+        slot="end"
+        (click)="confirmRemoveCategory(category)"
+        [disabled]="isLoading">
+        Rimuovi
+      </ion-button>
+    </ion-item>
+    }
+  </ion-list>
+  }
+
+  @if (!isLoading && categories.length === 0) {
+  <div class="empty-state">
+    <p>Nessuna categoria disponibile</p>
+  </div>
+  }
+
+  @if (statusMessage) {
+  <div class="status-message">
+    {{ statusMessage }}
+  </div>
+  }
+</div>
+
+<ion-alert
+  [isOpen]="isAlertOpen"
+  header="Conferma Rimozione"
+  [message]="alertMessage"
+  [buttons]="[
+    {
+      text: 'Annulla',
+      role: 'cancel'
+    },
+    {
+      text: 'Rimuovi',
+      role: 'confirm'
+    }
+  ]"
+  (didDismiss)="onAlertDismiss($event)">
+</ion-alert>

@@ -1,0 +1,104 @@
+.categories-container {
+    width: 100%;
+    padding: 16px 0;
+    background: var(--ion-color-light);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--ion-background-color);
+}
+
+.categories-scroll {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    gap: 8px;
+    padding: 0 16px;
+    scroll-behavior: smooth;
+    
+    // Da chat: per nascondere la scrollbar su tutti i browser
+    // si può comunque scrollare con il mouse o il touchpad
+    // e su mobile si può scrollare con il dito
+    /* Nasconde la scrollbar su WebKit browsers */
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Nasconde la scrollbar su Firefox */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.category-item {
+    flex: 0 0 auto;
+    
+    ion-chip {
+        --background: var(--ion-color-medium);
+        --color: white;
+        
+        min-width: fit-content;
+        max-width: none;
+        
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        
+        --padding-start: 20px;
+        --padding-end: 20px;
+        --padding-top: 12px;
+        --padding-bottom: 12px;
+        
+        font-size: 0.9rem;
+        font-weight: 500;
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        
+        cursor: pointer;
+        
+        &.selected {
+            --background: var(--ion-color-primary);
+            --color: white;
+            font-weight: 600;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .categories-container {
+        padding: 12px 0;
+    }
+    
+    .categories-scroll {
+        gap: 6px;
+        padding: 0 12px;
+    }
+    
+    .category-item ion-chip {
+        font-size: 0.85rem;
+        --padding-start: 16px;
+        --padding-end: 16px;
+        --padding-top: 10px;
+        --padding-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-container {
+        padding: 10px 0;
+    }
+    
+    .categories-scroll {
+        gap: 4px;
+        padding: 0 8px;
+    }
+    
+    .category-item ion-chip {
+        font-size: 0.8rem;
+        --padding-start: 14px;
+        --padding-end: 14px;
+        --padding-top: 8px;
+        --padding-bottom: 8px;
+    }
+}

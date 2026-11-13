@@ -1,0 +1,71 @@
+<div class="form-center-box">
+  <form [formGroup]="addIndirizzoForm" (ngSubmit)="onAddSubmit()">
+    <div class="form-container box-shadows">
+      <div class="input-group">
+        <ion-item>
+          <ion-input type="text" placeholder="Via" formControlName="via"></ion-input>
+          @if (addIndirizzoForm.get('via')?.touched && addIndirizzoForm.get('via')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="Numero Civico" formControlName="numero_civico"></ion-input>
+          @if (addIndirizzoForm.get('numero_civico')?.touched &&
+          addIndirizzoForm.get('numero_civico')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="Città" formControlName="citta"></ion-input>
+          @if (addIndirizzoForm.get('citta')?.touched && addIndirizzoForm.get('citta')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="CAP" formControlName="cap"></ion-input>
+          @if (addIndirizzoForm.get('cap')?.touched && addIndirizzoForm.get('cap')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-textarea placeholder="Note di consegna (opzionale)" formControlName="note_consegna"
+            rows="3"></ion-textarea>
+          @if (addIndirizzoForm.get('note_consegna')?.touched &&
+          addIndirizzoForm.get('note_consegna')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+      </div>
+
+      <div class="button-group">
+        <ion-button type="submit" expand="block" [disabled]="!addIndirizzoForm.valid || isLoading">
+          @if (isLoading) {
+          Aggiunta in corso...
+          } @else {
+          Aggiungi Indirizzo
+          }
+        </ion-button>
+
+        <ion-button type="button" expand="block" fill="clear" color="medium" (click)="goBack()">
+          Torna indietro
+        </ion-button>
+      </div>
+
+      <!-- Messaggio di stato -->
+      @if (statusMessage) {
+      <div class="status-message">
+        {{ statusMessage }}
+      </div>
+      }
+    </div>
+  </form>
+</div>

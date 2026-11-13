@@ -1,0 +1,100 @@
+<div class="login-center-box">
+  <!-- <div class="info-container">
+  <ion-img src="../../../assets/logos.svg" alt="logo"></ion-img>
+  <h1 id="title">Accedi al tuo account</h1>
+  </div> -->
+  <!-- TODO Togliere questa parte, con le rotte è diventata inutile (ANCHE CSS) -->
+  <!-- ? Stato di autenticazione -->
+  <!-- <div class="auth_status">
+    @if (authService.isAuthenticated$ | async) {
+    <div class="status-logged-in">
+      <ion-icon name="checkmark-circle"></ion-icon>
+      <span>Utente già connesso</span>
+    </div>
+    } @else {
+    <div class="status-logged-out">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <span>Accedi al tuo account</span>
+    </div>
+    }
+  </div> -->
+  <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+    <div class="form-container box-shadows">
+      <div class="input-group">
+        <ion-item>
+          <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Password" formControlName="password">
+          </ion-input>
+          <ion-button slot="end" fill="clear" size="small" class="password-toggle-btn"
+            (click)="togglePasswordVisibility()" type="button">
+            <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" slot="icon-only">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+
+      <ion-button type="submit" expand="block"
+        [disabled]="!loginForm.valid || isLoading || (authService.isAuthenticated$ | async)">
+        @if (isLoading) {
+        Accesso in corso...
+        } @else {
+        Log in
+        }
+      </ion-button>
+      <ion-button type="button" expand="block" fill="clear" (click)="navigateToRegister()">
+        Nuovo Utente? Registrati
+      </ion-button>
+
+      <!-- Messaggio di errore del login -->
+      @if (errorMessage) {
+      <div class="login-error">
+        {{ errorMessage }}
+      </div>
+      }
+    </div>
+
+    @if ( (loginForm.get('email')?.dirty &&
+    (loginForm.get('email')?.errors?.['required'] || loginForm.get('email')?.errors?.['email'])
+    ) ||
+    (loginForm.get('password')?.dirty &&
+    (loginForm.get('password')?.errors?.['required'] ||
+    loginForm.get('password')?.errors?.['minlength'] ||
+    loginForm.get('password')?.errors?.['maxlength']
+    ))
+    ) {
+    <div class="form-errors box-shadows">
+      @if (loginForm.get('email')?.dirty && loginForm.get('email')?.errors) {
+      <div class="error-section">
+        @if (loginForm.get('email')?.errors?.['required']) {
+        <div>L'email è richiesta</div>
+        }
+        @if (loginForm.get('email')?.errors?.['email']) {
+        <div>L'email non è valida</div>
+        }
+      </div>
+      }
+
+      @if ((loginForm.get('password')?.dirty && (
+      loginForm.get('password')?.errors?.['required'] ||
+      loginForm.get('password')?.errors?.['minlength'] ||
+      loginForm.get('password')?.errors?.['maxlength']
+      ))) {
+      <div class="error-section">
+        @if (loginForm.get('password')?.errors?.['required']) {
+        <div>La password è richiesta</div>
+        }
+        @if (loginForm.get('password')?.errors?.['minlength']) {
+        <div>La password deve essere lunga almeno 8 caratteri</div>
+        }
+        @if (loginForm.get('password')?.errors?.['maxlength']) {
+        <div>La password non può superare i 24 caratteri</div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </form>
+</div>

@@ -1,0 +1,246 @@
+<div class="ordini-container">
+  <ion-card class="ordini-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="receipt-outline"></ion-icon>
+        Gestione Ordini
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="search-container">
+        <div class="search-flex">
+          <div class="search-input">
+            <ion-item>
+              <ion-input label="Cerca per ID ordine" labelPlacement="stacked" type="text" placeholder="Es: 123, 456..."
+                [(ngModel)]="searchTerm" (ionInput)="filterOrdiniById($event)" clearInput="true">
+                <ion-icon name="search-outline" slot="start"></ion-icon>
+              </ion-input>
+            </ion-item>
+          </div>
+          <div class="filter-button">
+            <ion-button expand="block" fill="outline" [color]="nascondiOrdiniConsegnati ? 'success' : 'medium'"
+              (click)="toggleOrdiniConsegnati()">
+              <ion-icon [name]="nascondiOrdiniConsegnati ? 'eye-off-outline' : 'eye-outline'" slot="start">
+              </ion-icon>
+              {{ nascondiOrdiniConsegnati ? 'Mostra Consegnati' : 'Nascondi Consegnati' }}
+            </ion-button>
+          </div>
+        </div>
+      </div>
+
+      @if (isLoading) {
+      <div class="loading-message">
+        <ion-text>
+          <p>Caricamento ordini...</p>
+        </ion-text>
+      </div>
+      } @else if (isOrdiniEmpty()) {
+      <div class="empty-ordini">
+        <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+        <ion-text>
+          <h3>Nessun ordine trovato</h3>
+          <p>@if (searchTerm) { Nessun ordine trovato con ID "{{ searchTerm }}" } @else { Non ci sono ordini nel sistema
+            } </p>
+        </ion-text>
+      </div>
+      } @else {
+      <!-- Lista degli ordini -->
+      <ion-accordion-group>
+        @for (ordine of filteredOrdini; track ordine.ID_ordine) {
+        <ion-accordion value="{{ ordine.ID_ordine }}">
+          <ion-item slot="header">
+            <ion-label>
+              <div class="ordine-header">
+                <div class="ordine-info">
+                  <h3>Ordine #{{ ordine.ID_ordine }}</h3>
+                  <div class="ordine-meta">
+                    <span class="ordine-date">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      {{ formatData(ordine.data) }}
+                    </span>
+                    <span class="ordine-time">
+                      <ion-icon name="time-outline"></ion-icon>
+                      {{ formatOra(ordine.ora) }}
+                    </span>
+                  </div>
+                  <div class="acquirente-info">
+                    <span class="acquirente-nome">
+                      <ion-icon name="person-outline"></ion-icon>
+                      {{ formatNomeCompleto(ordine) }}
+                    </span>
+                  </div>
+                </div>
+                <div class="ordine-status">
+                  <ion-badge [color]="getStatoOrdineColor(ordine.stato)">
+                    {{ getStatoOrdineText(ordine.stato) }}
+                  </ion-badge>
+                  <div class="ordine-price">
+                    <ion-icon name="pricetag-outline"></ion-icon>
+                    {{ toNumber(ordine.prezzo_totale) | currency:'EUR':'symbol':'1.2-2' }}
+                  </div>
+                </div>
+              </div>
+            </ion-label>
+          </ion-item>
+
+          <div class="ordine-details" slot="content">
+            <!-- Informazioni acquirente -->
+            <div class="acquirente-details">
+              <ion-text>
+                <h4>
+                  <ion-icon name="person-outline"></ion-icon>
+                  Informazioni Acquirente
+                </h4>
+              </ion-text>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <strong>Nome:</strong> {{ formatNomeCompleto(ordine) }}
+                    </div>
+                  </ion-col>
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <ion-icon name="call-outline"></ion-icon>
+                      <strong>Telefono:</strong> {{ ordine.numero_telefono || 'Non disponibile' }}
+                    </div>
+                  </ion-col>
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <ion-icon name="mail-outline"></ion-icon>
+                      <strong>Email:</strong> {{ ordine.email || 'Non disponibile' }}
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+
+            <!-- Informazioni Fattorino -->
+            @if (ordine.stato === StatoOrdine.IN_CONSEGNA || ordine.stato === StatoOrdine.CONSEGNATO) {
+            <div class="fattorino-details">
+              <ion-text>
+                <h4>
+                  <ion-icon name="car-outline"></ion-icon>
+                  Informazioni Fattorino
+                </h4>
+              </ion-text>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <strong>ID Fattorino:</strong> {{ ordine.REF_fattorino || 'Non assegnato' }}
+                    </div>
+                  </ion-col>
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <strong>Nome:</strong> {{ formatNomeFattorino(ordine) }}
+                    </div>
+                  </ion-col>
+                  @if (ordine.telefono_fattorino) {
+                  <ion-col size="12" size-md="6" size-lg="4">
+                    <div class="info-item">
+                      <ion-icon name="call-outline"></ion-icon>
+                      <strong>Telefono:</strong> {{ ordine.telefono_fattorino }}
+                    </div>
+                  </ion-col>
+                  }
+                </ion-row>
+              </ion-grid>
+            </div>
+            }
+
+            <!-- Indirizzo di consegna -->
+            <div class="delivery-info">
+              <ion-text>
+                <h4>
+                  <ion-icon name="location-outline"></ion-icon>
+                  Indirizzo di consegna
+                </h4>
+                <p>{{ formatIndirizzo(ordine) }}</p>
+              </ion-text>
+            </div>
+
+            <!-- Lista prodotti -->
+            <div class="products-info">
+              <ion-text>
+                <h4>
+                  <ion-icon name="restaurant-outline"></ion-icon>
+                  Prodotti ordinati
+                </h4>
+              </ion-text>
+              <ion-list class="products-list">
+                @for (prodotto of getProdottiOrdine(ordine.ID_ordine!); track getProductTrackId(prodotto)) {
+                <ion-item class="product-item">
+                  <ion-label>
+                    <div class="product-info">
+                      <div class="product-name">
+                        <strong>{{ prodotto.nome_prodotto }}</strong>
+                        <span class="product-quantity">x{{ prodotto.quantita }}</span>
+                      </div>
+                      @if (prodotto.note && prodotto.note.trim() !== '') {
+                      <div class="product-notes">
+                        <em>Note: {{ prodotto.note }}</em>
+                      </div>
+                      }
+                      <div class="product-price">
+                        {{ toNumber(prodotto.prezzo_unitario) | currency:'EUR':'symbol':'1.2-2' }} cad.
+                      </div>
+                    </div>
+                  </ion-label>
+                </ion-item>
+                }
+              </ion-list>
+            </div>
+
+            <!-- Azioni gestione stato ordine -->
+            <div class="order-actions">
+              <ion-text>
+                <h4>Azioni Admin</h4>
+              </ion-text>
+              <div class="action-buttons">
+                @if (ordine.stato === StatoOrdine.ORDINATO) {
+                <div class="admin-actions">
+                  <ion-button expand="block" color="success" size="small"
+                    (click)="updateOrderStatus(ordine.ID_ordine!, StatoOrdine.ACCETTATO)">
+                    <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
+                    Accetta Ordine
+                  </ion-button>
+                  <ion-button expand="block" color="danger" size="small"
+                    (click)="updateOrderStatus(ordine.ID_ordine!, StatoOrdine.RIFIUTATO)">
+                    <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                    Rifiuta Ordine
+                  </ion-button>
+                </div>
+                } @else if (ordine.stato === StatoOrdine.ACCETTATO) {
+                <ion-button expand="block" color="secondary" size="small"
+                  (click)="updateOrderStatus(ordine.ID_ordine!, StatoOrdine.IN_PREPARAZIONE)">
+                  Inizia Preparazione
+                </ion-button>
+                } @else if (ordine.stato === StatoOrdine.RIFIUTATO) {
+                <ion-text color="danger">
+                  <p><em>Ordine rifiutato</em></p>
+                </ion-text>
+                } @else if (ordine.stato === StatoOrdine.CONSEGNATO) {
+                <ion-text color="medium">
+                  <p><em>Ordine consegnato correttamente.</em></p>
+                </ion-text>
+                } @else if (ordine.stato == StatoOrdine.IN_CONSEGNA) {
+                <ion-text color="medium">
+                  <p><em>L'ordine è in consegna</em></p>
+                </ion-text>
+                } @else {
+                <ion-text color="medium">
+                  <p><em>L'ordine verrà gestito a breve da un fattorino </em></p>
+                </ion-text>
+                }
+              </div>
+            </div>
+          </div>
+        </ion-accordion>
+        }
+      </ion-accordion-group>
+      }
+    </ion-card-content>
+  </ion-card>
+</div>

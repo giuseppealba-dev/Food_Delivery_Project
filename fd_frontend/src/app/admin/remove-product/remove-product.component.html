@@ -1,0 +1,66 @@
+<div class="container">
+  <!-- Pulsante Torna indietro -->
+  <div class="back-button-container">
+    <ion-button fill="solid" color="medium" (click)="goBackToGestione()">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Torna Indietro
+    </ion-button>
+  </div>
+
+  <div class="header">
+    <h2>Rimuovi Prodotti</h2>
+  </div>
+
+  <!-- Lista dei prodotti -->
+  @if (!isLoading && products.length > 0) {
+  <ion-list>
+    @for (product of products; track product.ID_prodotto) {
+    <ion-item>
+      <ion-label>
+        <h3>{{ product.nome_prodotto }}</h3>
+        <p>Prezzo: {{ product.prezzo }}€</p>
+        <p>ID: {{ product.ID_prodotto }}</p>
+      </ion-label>
+      <ion-button 
+        color="danger" 
+        slot="end"
+        (click)="confirmRemoveProduct(product)"
+        [disabled]="isLoading">
+        Rimuovi
+      </ion-button>
+    </ion-item>
+    }
+  </ion-list>
+  }
+
+  @if (!isLoading && products.length === 0) {
+  <div class="empty-state">
+    <p>Nessun prodotto disponibile</p>
+  </div>
+  }
+
+  <!-- Messaggio di status -->
+  @if (statusMessage) {
+  <div class="status-message">
+    {{ statusMessage }}
+  </div>
+  }
+</div>
+
+<!-- Alert inline per conferma rimozione -->
+<ion-alert
+  [isOpen]="isAlertOpen"
+  header="Conferma Rimozione"
+  [message]="alertMessage"
+  [buttons]="[
+    {
+      text: 'Annulla',
+      role: 'cancel'
+    },
+    {
+      text: 'Rimuovi',
+      role: 'confirm'
+    }
+  ]"
+  (didDismiss)="onAlertDismiss($event)">
+</ion-alert>

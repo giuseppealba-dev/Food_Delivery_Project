@@ -1,0 +1,14 @@
+ion-content {
+  --background: var(--background-blue-color);
+}
+
+ion-col {
+  padding-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+app-product-card {
+  width: 100%;
+  max-width: 400px;
+}

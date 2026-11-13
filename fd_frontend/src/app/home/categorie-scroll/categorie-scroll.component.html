@@ -1,0 +1,12 @@
+<div class="categories-container">
+  <div class="categories-scroll" (wheel)="onWheel($event)" #scrollContainer>
+
+    @for (item of items; track $index) {
+    <div class="category-item">
+      <ion-chip [class.selected]="sharedData.selectedCategory() === item.id" (click)="onCategoryClick(item.id)">
+        {{item.name}}
+      </ion-chip>
+    </div>
+    }
+  </div>
+</div>

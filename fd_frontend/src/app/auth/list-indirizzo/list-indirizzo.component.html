@@ -1,0 +1,81 @@
+<div class="indirizzo-container">
+  <ion-card class="indirizzo-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="home-outline"></ion-icon>
+        I Tuoi Indirizzi
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      @if (isLoading) {
+      <div class="loading-message">
+        <ion-text>
+          <p>Caricamento indirizzi...</p>
+        </ion-text>
+      </div>
+      } @else if (isIndirizziEmpty()) {
+      <div class="empty-indirizzo">
+        <ion-text>
+          <h3>Nessun indirizzo trovato</h3>
+          <p>Aggiungi un indirizzo per le tue consegne!</p>
+        </ion-text>
+      </div>
+      } @else {
+      <!-- Lista degli indirizzi -->
+      <ion-list class="indirizzo-items-list">
+        @for (indirizzo of indirizzi; track indirizzo.ID_indirizzo) {
+        <ion-item class="indirizzo-item">
+          <ion-label>
+            <h3>{{ indirizzo.via }}, {{ indirizzo.numero_civico }}</h3>
+            <p>{{ indirizzo.citta }} - {{ indirizzo.cap }}</p>
+            @if (indirizzo.note_consegna) {
+            <p class="note-consegna"><strong>Note:</strong> {{ indirizzo.note_consegna }}</p>
+            }
+          </ion-label>
+          <ion-button 
+            slot="end" 
+            fill="clear" 
+            color="danger" 
+            (click)="showDeleteIndirizzoConfirmation(indirizzo)">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-item>
+        }
+      </ion-list>
+      }
+
+      <div class="indirizzo-actions">
+        <ion-button expand="block" fill="outline" color="medium" (click)="navigateBack()">
+          <ion-icon name="arrow-back" slot="start"></ion-icon>
+          Torna Indietro
+        </ion-button>
+
+        <ion-button expand="block" color="primary" (click)="navigateToAddIndirizzo()">
+          <ion-icon name="add" slot="start"></ion-icon>
+          Aggiungi Indirizzo
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Alert di conferma per eliminare l'indirizzo -->
+  <ion-alert
+    [isOpen]="showDeleteConfirmation"
+    header="Conferma eliminazione"
+    message="Sei sicuro di voler eliminare questo indirizzo? Questa azione non può essere annullata."
+    [buttons]="[
+      {
+        text: 'Annulla',
+        role: 'cancel',
+        cssClass: 'secondary'
+      },
+      {
+        text: 'Elimina',
+        role: 'confirm',
+        cssClass: 'danger'
+      }
+    ]"
+    (didDismiss)="handleDeleteAlertResponse($event)">
+  </ion-alert>
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+  <!-- Pulsante Torna indietro -->
+  <div class="back-button-container">
+    <ion-button fill="solid" color="medium" (click)="goBackToGestione()">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Torna Indietro
+    </ion-button>
+  </div>
+
+  <div class="header">
+    <h2>Rimuovi Ingredienti</h2>
+  </div>
+
+  <!-- Lista degli ingredienti -->
+  @if (!isLoading && ingredients.length > 0) {
+  <ion-list>
+    @for (ingredient of ingredients; track ingredient.ID_ingrediente) {
+    <ion-item>
+      <ion-label>
+        <h3>{{ ingredient.nome_ingrediente }}</h3>
+        <p>ID: {{ ingredient.ID_ingrediente }}</p>
+      </ion-label>
+      <ion-button 
+        color="danger" 
+        slot="end"
+        (click)="confirmRemoveIngredient(ingredient)"
+        [disabled]="isLoading">
+        Rimuovi
+      </ion-button>
+    </ion-item>
+    }
+  </ion-list>
+  }
+
+  @if (!isLoading && ingredients.length === 0) {
+  <div class="empty-state">
+    <p>Nessun ingrediente disponibile</p>
+  </div>
+  }
+
+  <!-- Messaggio di status -->
+  @if (statusMessage) {
+  <div class="status-message">
+    {{ statusMessage }}
+  </div>
+  }
+</div>
+
+<ion-alert
+  [isOpen]="isAlertOpen"
+  header="Conferma Rimozione"
+  [message]="alertMessage"
+  [buttons]="[
+    {
+      text: 'Annulla',
+      role: 'cancel'
+    },
+    {
+      text: 'Rimuovi',
+      role: 'confirm'
+    }
+  ]"
+  (didDismiss)="onAlertDismiss($event)">
+</ion-alert>

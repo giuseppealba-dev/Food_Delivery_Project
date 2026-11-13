@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "fd_backend"
+		},
+		{
+			"path": "fd_frontend"
+		},
+		{
+			"path": "../Express_Authentication"
+		},
+		{
+			"path": "../express_teoria"
+		},
+		{
+			"path": "../test_express/auth_express"
+		},
+		{
+			"path": "../test_express/backend"
+		},
+		{
+			"path": "../test_express/frontend"
+		},
+		{
+			"path": "../progetto_lezione"
+		},
+		{
+			"path": "../progetto_app"
+		},
+		{
+			"path": "prova_ionic"
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,122 @@
+<div class="register-center-box">
+  <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+    <div class="form-container box-shadows">
+      <div class="input-group">
+        <ion-item>
+          <ion-input type="text" placeholder="Nome" formControlName="nome"></ion-input>
+          @if (registerForm.get('nome')?.touched && registerForm.get('nome')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+
+          }
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" placeholder="Cognome" formControlName="cognome"></ion-input>
+          @if (registerForm.get('cognome')?.touched && registerForm.get('cognome')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+        <ion-item>
+          <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+          @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+        <ion-item>
+          <ion-input type="text" placeholder="Numero di Telefono (+39)" formControlName="n_telefono"></ion-input>
+          @if (registerForm.get('n_telefono')?.touched && registerForm.get('n_telefono')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+        <ion-item>
+          <ion-input [type]="showPassword ? 'text' : 'password'" placeholder="Password"
+            formControlName="password"></ion-input>
+          <ion-button slot="end" fill="clear" size="small" class="password-toggle-btn"
+            (click)="togglePasswordVisibility()" type="button">
+            <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" slot="icon-only">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item>
+          <ion-input [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Conferma Password"
+            formControlName="conferma_password"></ion-input>
+          <ion-button slot="end" fill="clear" size="small" class="password-toggle-btn"
+            (click)="toggleConfirmPasswordVisibility()" type="button">
+            <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'" slot="icon-only">
+            </ion-icon>
+          </ion-button>
+        </ion-item>
+      </div>
+
+      <ion-button type="submit" expand="block" [disabled]="!registerForm.valid">Registrati</ion-button>
+      <ion-button type="button" expand="block" fill="clear" (click)="navitateToLogin()">Già registrato? Accedi
+      </ion-button>
+
+      <!-- Messaggio di errore della registrazione -->
+      @if (errorMessage) {
+      <div class="login-error">
+        {{ errorMessage }}
+      </div>
+      }
+    </div>
+
+    @if ( (registerForm.get('email')?.dirty &&
+    (registerForm.get('email')?.errors?.['required'] || registerForm.get('email')?.errors?.['email'])
+    ) ||
+    (registerForm.get('password')?.dirty &&
+    (registerForm.get('password')?.errors?.['required'] ||
+    registerForm.get('password')?.errors?.['minlength'] ||
+    registerForm.get('password')?.errors?.['maxlength'] ||
+    registerForm.get('password')?.errors?.['pattern']
+    )) ||
+    (registerForm.get('conferma_password')?.dirty && registerForm.hasError('passwordMismatch'))
+    ) {
+    <div class="form-errors box-shadows">
+      @if (registerForm.get('email')?.dirty && registerForm.get('email')?.errors) {
+      <div class="error-section">
+        @if (registerForm.get('email')?.errors?.['required']) {
+        <div>L'email è richiesta</div>
+        }
+        @if (registerForm.get('email')?.errors?.['email']) {
+        <div>L'email non è valida. Formato: {{formato_email}}</div>
+        }
+      </div>
+      }
+
+      @if ((registerForm.get('password')?.dirty && (
+      registerForm.get('password')?.errors?.['required'] ||
+      registerForm.get('password')?.errors?.['minlength'] ||
+      registerForm.get('password')?.errors?.['maxlength'] ||
+      registerForm.get('password')?.errors?.['pattern']
+      ))) {
+      <div class="error-section">
+        @if (registerForm.get('password')?.errors?.['required']) {
+        <div>La password è richiesta</div>
+        }
+        @if (registerForm.get('password')?.errors?.['minlength']) {
+        <div>La password deve essere lunga almeno 8 caratteri</div>
+        }
+        @if (registerForm.get('password')?.errors?.['maxlength']) {
+        <div>La password non può superare i 24 caratteri</div>
+        }
+        @if (registerForm.get('password')?.errors?.['pattern']) {
+        <div>La password deve contenere almeno: una lettera maiuscola, un numero, un carattere speciale ({{caratteri_speciali_password}})</div>
+        }
+      </div>
+      }
+
+      @if (registerForm.get('conferma_password')?.dirty && registerForm.hasError('passwordMismatch')) {
+      <div class="error-section">
+        <div>Le password non corrispondono</div>
+      </div>
+      }
+
+
+
+    </div>
+    }
+  </form>
+</div>

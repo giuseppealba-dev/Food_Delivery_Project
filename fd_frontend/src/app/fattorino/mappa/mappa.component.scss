@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-content {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+}
+
+.map-card {
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+
+  ion-card-content {
+    padding: 0;
+    height: 100%;
+  }
+}
+  
+.map {
+  width: 100%;
+  height: 100vh;
+  min-height: 400px;
+  background-color: #f0f0f0;
+  z-index: 1;
+}
+
+.leaflet-container .leaflet-control-attribution {
+  font-size: 10px;
+}
+
+.leaflet-control-container {
+  position: relative;
+  z-index: 1000;
+}

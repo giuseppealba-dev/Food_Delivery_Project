@@ -1,0 +1,99 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard Admin</h1>
+    <p class="subtitle">Gestisci prodotti, ingredienti e categorie</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <!-- Sezione Prodotti -->
+    <ion-card class="dashboard-section">
+      <ion-card-header>
+        <ion-card-title class="section-title">
+          <ion-icon name="fast-food-outline"></ion-icon>
+          Prodotti
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="button-group">
+          <ion-button 
+            class="dashboard-btn primary-btn" 
+            expand="block" 
+            (click)="navigateToAddProduct()">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Aggiungi Prodotto
+          </ion-button>
+          <ion-button 
+            class="dashboard-btn secondary-btn" 
+            expand="block" 
+            (click)="navigateToListEditProduct()">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            Modifica Prodotti
+          </ion-button>
+          <ion-button 
+            class="dashboard-btn danger-btn" 
+            expand="block" 
+            (click)="navigateToRemoveProduct()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            Rimuovi Prodotto
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Sezione Ingredienti -->
+    <ion-card class="dashboard-section">
+      <ion-card-header>
+        <ion-card-title class="section-title">
+          <ion-icon name="leaf-outline"></ion-icon>
+          Ingredienti
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="button-group">
+          <ion-button 
+            class="dashboard-btn primary-btn" 
+            expand="block" 
+            (click)="navigateToAddIngredient()">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Aggiungi Ingrediente
+          </ion-button>
+          <ion-button 
+            class="dashboard-btn danger-btn" 
+            expand="block" 
+            (click)="navigateToRemoveIngredient()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            Rimuovi Ingrediente
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Sezione Categorie -->
+    <ion-card class="dashboard-section">
+      <ion-card-header>
+        <ion-card-title class="section-title">
+          <ion-icon name="apps-outline"></ion-icon>
+          Categorie
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="button-group">
+          <ion-button 
+            class="dashboard-btn primary-btn" 
+            expand="block" 
+            (click)="navigateToAddCategory()">
+            <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+            Aggiungi Categoria
+          </ion-button>
+          <ion-button 
+            class="dashboard-btn danger-btn" 
+            expand="block" 
+            (click)="navigateToRemoveCategory()">
+            <ion-icon name="trash-outline" slot="start"></ion-icon>
+            Rimuovi Categoria
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>

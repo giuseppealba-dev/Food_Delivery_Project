@@ -1,0 +1,37 @@
+<div class="form-center-box">
+  <form [formGroup]="addCategoryForm" (ngSubmit)="onAddSubmit()">
+    <div class="form-container box-shadows">
+      <div class="input-group">
+        <ion-item>
+          <ion-input type="text" placeholder="Nome Categoria" formControlName="nome_categoria"></ion-input>
+          @if (addCategoryForm.get('nome_categoria')?.touched && addCategoryForm.get('nome_categoria')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+      </div>
+
+      <div class="button-group">
+        <ion-button type="submit" expand="block" [disabled]="!addCategoryForm.valid || isLoading">
+          @if (isLoading) {
+          Aggiunta in corso...
+          } @else {
+          Aggiungi Categoria
+          }
+        </ion-button>
+
+        <ion-button type="button" expand="block" fill="clear" color="medium" (click)="goBack()">
+          Torna indietro
+        </ion-button>
+      </div>
+
+      <!-- Messaggio di status -->
+      @if (statusMessage) {
+      <div class="status-message">
+        {{ statusMessage }}
+      </div>
+      }
+    </div>
+    <!-- <p>{{categoriaAggiunta}}</p> -->
+  </form>
+</div>

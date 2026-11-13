@@ -1,0 +1,127 @@
+<div class="ordini-container">
+  <ion-card class="ordini-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="receipt-outline"></ion-icon>
+        Storico Ordini
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      @if (isLoading) {
+      <div class="loading-message">
+        <ion-text>
+          <p>Caricamento ordini...</p>
+        </ion-text>
+      </div>
+      } @else if (isOrdiniEmpty()) {
+      <div class="empty-ordini">
+        <ion-icon name="receipt-outline" class="empty-icon"></ion-icon>
+        <ion-text>
+          <h3>Nessun ordine trovato</h3>
+          <p>Non hai ancora effettuato nessun ordine!</p>
+        </ion-text>
+      </div>
+      } @else {
+      <!-- Lista degli ordini -->
+      <ion-accordion-group>
+        @for (ordine of ordini; track ordine.ID_ordine) {
+        <ion-accordion value="{{ ordine.ID_ordine }}">
+          <ion-item slot="header">
+            <ion-label>
+              <div class="ordine-header">
+                <div class="ordine-info">
+                  <h3>Ordine #{{ ordine.ID_ordine }}</h3>
+                  <div class="ordine-meta">
+                    <span class="ordine-date">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                      {{ formatData(ordine.data) }}
+                    </span>
+                    <span class="ordine-time">
+                      <ion-icon name="time-outline"></ion-icon>
+                      {{ formatOra(ordine.ora) }}
+                    </span>
+                  </div>
+                </div>
+                <div class="ordine-status">
+                  <ion-badge [color]="getStatoOrdineColor(ordine.stato)">
+                    {{ getStatoOrdineText(ordine.stato) }}
+                  </ion-badge>
+                  <div class="ordine-price">
+                    <ion-icon name="pricetag-outline"></ion-icon>
+                    {{ toNumber(ordine.prezzo_totale) | currency:'EUR':'symbol':'1.2-2' }}
+                  </div>
+                </div>
+              </div>
+            </ion-label>
+          </ion-item>
+          
+          <div class="ordine-details" slot="content">
+            <!-- Indirizzo di consegna -->
+            <div class="delivery-info">
+              <ion-text>
+                <h4>
+                  <ion-icon name="location-outline"></ion-icon>
+                  Indirizzo di consegna
+                </h4>
+                <p>{{ formatIndirizzo(ordine) }}</p>
+              </ion-text>
+            </div>
+
+            <!-- Lista prodotti -->
+            <div class="products-info">
+              <ion-text>
+                <h4>
+                  <ion-icon name="restaurant-outline"></ion-icon>
+                  Prodotti ordinati
+                </h4>
+              </ion-text>
+              <ion-list class="products-list">
+                @for (prodotto of getProdottiOrdine(ordine.ID_ordine!); track getProductTrackId(prodotto)) {
+                <ion-item class="product-item">
+                  <ion-label>
+                    <div class="product-info">
+                      <div class="product-name">
+                        <strong>{{ prodotto.nome_prodotto }}</strong>
+                        <span class="product-quantity">x{{ prodotto.quantita }}</span>
+                      </div>
+                      @if (prodotto.note && prodotto.note.trim() !== '') {
+                      <div class="product-notes">
+                        <em>Note: {{ prodotto.note }}</em>
+                      </div>
+                      }
+                      <div class="product-price">
+                        {{ toNumber(prodotto.prezzo_unitario) | currency:'EUR':'symbol':'1.2-2' }} cad.
+                      </div>
+                    </div>
+                  </ion-label>
+                </ion-item>
+                }
+              </ion-list>
+            </div>
+
+            <!-- Note ordine -->
+            <!-- @if (ordine.note_ordine && ordine.note_ordine.trim() !== '') {
+            <div class="order-notes">
+              <ion-text>
+                <h4>Note ordine</h4>
+                <p>{{ ordine.note_ordine }}</p>
+              </ion-text>
+            </div>
+            } -->
+          </div>
+        </ion-accordion>
+        }
+      </ion-accordion-group>
+      }
+
+      <!-- Pulsante per tornare indietro -->
+      <div class="ordini-actions">
+        <ion-button expand="block" fill="outline" color="medium" (click)="navigateBack()">
+          <ion-icon name="arrow-back" slot="start"></ion-icon>
+          Torna Indietro
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

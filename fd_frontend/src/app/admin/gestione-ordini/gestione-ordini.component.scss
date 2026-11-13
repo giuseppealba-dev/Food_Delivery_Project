@@ -1,0 +1,497 @@
+.ordini-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.ordini-summary {
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  margin: 0;
+
+  ion-card-header {
+    background: var(--ion-color-primary);
+    color: white;
+    border-radius: 16px 16px 0 0;
+
+    ion-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 600;
+
+      ion-icon {
+        font-size: 28px;
+      }
+    }
+  }
+
+  ion-card-content {
+    padding: 20px;
+  }
+}
+
+.search-container {
+  margin-bottom: 2px;
+
+  .search-flex {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .search-input {
+    flex: 1;
+  }
+
+  .filter-button {
+    flex-shrink: 0;
+    min-width: 200px;
+  }
+
+  ion-item {
+    --padding-start: 0;
+    --padding-end: 0;
+    --border-radius: 12px;
+    --background: var(--ion-color-light);
+    margin-bottom: 16px;
+
+    ion-input {
+      --padding-start: 16px;
+      --padding-end: 16px;
+      font-size: 16px;
+    }
+
+    ion-icon {
+      color: var(--ion-color-medium);
+      margin-left: 12px;
+    }
+  }
+
+  ion-button {
+    --border-radius: 12px;
+    --height: 50px;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 16px;
+
+    ion-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// Responsive per mobile
+@media (max-width: 768px) {
+  .search-container {
+    .search-flex {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .filter-button {
+      min-width: auto;
+    }
+  }
+
+  .order-actions {
+    .action-buttons {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    ion-button {
+      min-width: auto;
+    }
+  }
+}
+
+.loading-message {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+
+  ion-text p {
+    color: var(--ion-color-medium);
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.empty-ordini {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+
+  .empty-icon {
+    font-size: 80px;
+    color: var(--ion-color-medium);
+    margin-bottom: 20px;
+  }
+
+  ion-text {
+    h3 {
+      color: var(--ion-color-dark);
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    p {
+      color: var(--ion-color-medium);
+      font-size: 16px;
+      margin: 0;
+    }
+  }
+}
+
+ion-accordion-group {
+  margin-bottom: 20px;
+}
+
+.ordine-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+
+  .ordine-info {
+    flex: 1;
+
+    h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+
+    .ordine-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--ion-color-medium);
+      margin-bottom: 8px;
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        ion-icon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .acquirente-info {
+      display: flex;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--ion-color-medium);
+
+      .acquirente-nome {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 500;
+
+        ion-icon {
+          font-size: 16px;
+          color: var(--ion-color-tertiary);
+        }
+      }
+    }
+  }
+
+  .ordine-status {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+
+    .ordine-price {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-success);
+
+      ion-icon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.ordine-details {
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 0 0 12px 12px;
+
+  .acquirente-details {
+    margin-bottom: 20px;
+    padding: 16px;
+    // background: white;
+    border-radius: 12px;
+    border-left: 4px solid var(--ion-color-tertiary);
+
+    h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+
+      ion-icon {
+        font-size: 20px;
+        color: var(--ion-color-tertiary);
+      }
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding: 8px 0;
+      font-size: 14px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      strong {
+        color: var(--ion-color-dark);
+        margin-right: 4px;
+      }
+
+      ion-icon {
+        color: var(--ion-color-medium);
+        font-size: 16px;
+      }
+    }
+  }
+
+  .fattorino-details {
+    margin-bottom: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid var(--ion-color-secondary);
+
+    h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+
+      ion-icon {
+        font-size: 20px;
+        color: var(--ion-color-secondary);
+      }
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding: 8px 0;
+      font-size: 14px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      strong {
+        color: var(--ion-color-dark);
+        margin-right: 4px;
+      }
+
+      ion-icon {
+        color: var(--ion-color-medium);
+        font-size: 16px;
+      }
+    }
+  }
+
+  .delivery-info,
+  .products-info {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h4 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+
+      ion-icon {
+        font-size: 20px;
+        color: var(--ion-color-primary);
+      }
+    }
+
+    p {
+      margin: 0;
+      color: var(--ion-color-medium);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+  }
+
+  .products-list {
+    margin-top: 12px;
+    
+    .product-item {
+      --padding-start: 0;
+      --padding-end: 0;
+      --inner-padding-end: 0;
+      margin-bottom: 8px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      ion-label {
+        padding: 0rem 1rem;
+      }
+
+      .product-info {
+        width: 100%;
+
+        .product-name {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 4px;
+
+          strong {
+            font-size: 15px;
+            color: var(--ion-color-dark);
+          }
+
+          .product-quantity {
+            font-size: 14px;
+            color: var(--ion-color-medium);
+            font-weight: 500;
+          }
+        }
+
+        .product-notes {
+          margin-bottom: 4px;
+
+          em {
+            font-size: 13px;
+            color: var(--ion-color-medium);
+          }
+        }
+
+        .product-price {
+          font-size: 14px;
+          color: var(--ion-color-medium);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .order-actions {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid var(--ion-color-warning);
+
+    h4 {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .admin-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      ion-button {
+        --border-radius: 8px;
+        --height: 40px;
+        font-weight: 500;
+        font-size: 13px;
+        min-width: 150px;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .ordine-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    .ordine-status {
+      align-items: flex-start;
+      flex-direction: row;
+      gap: 16px;
+    }
+  }
+
+  .ordine-meta {
+    flex-direction: column;
+    gap: 8px !important;
+  }
+
+  .acquirente-info {
+    flex-direction: column;
+    gap: 8px !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .ordini-container {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .ordini-container {
+    max-width: 1000px;
+    padding: 32px;
+  }
+
+  .ordini-summary {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+}

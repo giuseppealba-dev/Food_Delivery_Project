@@ -1,0 +1,35 @@
+<ion-item class="cart-item">
+  <ion-thumbnail slot="start">
+    <ion-img [src]="cartItem().url_immagine" [alt]="cartItem().nome_prodotto"></ion-img>
+  </ion-thumbnail>
+
+  <ion-label>
+    <h2>{{ cartItem().nome_prodotto }}</h2>
+    <!-- Da CHATGPT per mettere la notazione in euro -->
+    <p>{{ cartItem().prezzo | currency:'EUR':'symbol':'1.2-2' }} cad.</p>
+    @if (cartItem().notes) {
+    <p class="notes">Note: {{ cartItem().notes }}</p>
+    }
+    <p class="quantity">Quantità: {{ cartItem().quantity }}</p>
+  </ion-label>
+
+  <div slot="end" class="item-actions">
+    <div class="price-total">
+      <p class="total-price">{{ getTotalPrice() | currency:'EUR':'symbol':'1.2-2' }}</p>
+    </div>
+
+    <div class="buttons">
+      <ion-button fill="outline" size="small" color="primary" (click)="onIncreaseQuantity()">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="outline" size="small" color="danger" (click)="onRemoveItem()">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      </ion-button>
+
+      <ion-button fill="outline" size="small" color="primary" (click)="onDecreaseQuantity()">
+        <ion-icon name="remove" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-item>

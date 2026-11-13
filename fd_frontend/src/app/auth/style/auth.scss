@@ -1,0 +1,90 @@
+.input-group {
+	background: yellow;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-bottom: 15px;
+	// padding: 1rem;
+}
+
+form {
+	min-width: 150px;
+	max-width: 400px;
+	width: 100%;
+	position: relative;
+}
+
+.form-container {
+	background-color: antiquewhite;
+	border-radius: 10px;
+	// box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.1);
+	padding: 1rem;
+}
+
+.form-errors {
+	font-size: small;
+	color: #fff;
+	background: var(--ion-color-danger);
+	padding: 10px 15px;
+	margin-top: 15px;
+	border-radius: 10px;
+	width: 100%;
+	position: relative;
+	top: 100%;
+	left: 0;
+	z-index: 10;
+	// box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	// max-height: 200px;
+	// overflow-y: auto;
+}
+
+.box-shadows {
+	box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.15);
+}
+
+.error-section {
+	margin-bottom: 0px;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	div {
+		margin: 3px 0;
+	}
+}
+
+.password-toggle-btn {
+	// --color: #2e76b5;
+	--padding-start: 6px;
+	--padding-end: 6px;
+
+	&:hover {
+		--color: #495057;
+	}
+}
+
+// Per gestire lo stile degli errori di login
+.login-error {
+	background-color: #f8d7da;
+	color: #721c24;
+	border: 1px solid #f5c6cb;
+	border-radius: 4px;
+	padding: 12px;
+	margin-top: 16px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+// Per gestire lo stile dei messaggi di successo
+.login-success {
+	background-color: #d4edda;
+	color: #155724;
+	border: 1px solid #c3e6cb;
+	border-radius: 4px;
+	padding: 12px;
+	margin-top: 16px;
+	text-align: center;
+	font-size: 14px;
+	font-weight: 500;
+}

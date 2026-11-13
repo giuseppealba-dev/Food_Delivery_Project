@@ -1,0 +1,66 @@
+<!-- Modale per la selezione degli indirizzi -->
+<ion-modal [isOpen]="isOpen" (willDismiss)="onWillDismiss($event)" (didDismiss)="onDidDismiss($event)" (didPresent)="onModalPresent()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Annulla</ion-button>
+        </ion-buttons>
+        <ion-title>Seleziona Indirizzo</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true" [disabled]="!selectedIndirizzo">Conferma</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input 
+          label="Cerca Indirizzo" 
+          labelPlacement="stacked" 
+          type="text" 
+          placeholder="Via, città o note consegna"
+          [(ngModel)]="searchTerm" 
+          (ionInput)="filterIndirizzi($event)">
+        </ion-input>
+      </ion-item>
+
+      @if (filteredIndirizzi.length === 0 && indirizzi.length === 0) {
+      <div class="no-addresses">
+        <ion-icon name="home-outline" class="no-addresses-icon"></ion-icon>
+        <ion-text>
+          <h3>Nessun indirizzo trovato</h3>
+          <p>Non hai ancora aggiunto nessun indirizzo di consegna.</p>
+          <p>Inserisci dalla tua dashboard utente.</p>
+        </ion-text>
+      </div>
+      } @else if (filteredIndirizzi.length === 0 && searchTerm) {
+      <div class="no-results">
+        <ion-icon name="location-outline" class="no-results-icon"></ion-icon>
+        <ion-text>
+          <h3>Nessun risultato</h3>
+          <p>Non sono stati trovati indirizzi che corrispondono alla ricerca.</p>
+        </ion-text>
+      </div>
+      } @else {
+      <ion-radio-group [(ngModel)]="selectedIndirizzoId" (ionChange)="onIndirizzoSelectionChange($event)">
+        @for (indirizzo of filteredIndirizzi; track indirizzo.ID_indirizzo) {
+        <ion-item>
+          <ion-radio [value]="indirizzo.ID_indirizzo" slot="start"></ion-radio>
+          <div class="indirizzo-info">
+            <ion-text>
+              <h3>{{ formatIndirizzo(indirizzo) }}</h3>
+              @if (indirizzo.note_consegna) {
+              <p class="note-consegna">
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                {{ indirizzo.note_consegna }}
+              </p>
+              }
+            </ion-text>
+          </div>
+        </ion-item>
+        }
+      </ion-radio-group>
+      }
+    </ion-content>
+  </ng-template>
+</ion-modal>

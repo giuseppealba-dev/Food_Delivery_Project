@@ -1,0 +1,134 @@
+<ion-card class="product-card" (click)="openProductModal()">
+  <div class="image-container">
+    <img [src]="img_url()" [alt]="nome()" />
+  </div>
+  <ion-card-header>
+    <ion-card-title class="product-title">{{ nome() }}</ion-card-title>
+
+    <!-- Prezzo con gestione offerta -->
+    <div class="price-container">
+      <!-- Se c'è uno sconto, mostra il prezzo originale barrato e il prezzo scontato -->
+      @if (hasDiscount) {
+      <div class="price-with-discount">
+        <span class="original-price">€{{ prezzo().toFixed(2) }}</span>
+        <span class="discounted-price">€{{ prezzoScontato.toFixed(2) }}</span>
+        <span class="discount-badge">-{{ percentuale_offerta() }}%</span>
+      </div>
+      } @else {
+      <div class="price-without-discount">
+        <span class="price">€{{ prezzo().toFixed(2) }}</span>
+      </div>
+      }
+
+      <!-- Alternativa -->
+      <!-- @if (!hasDiscount) {
+      <ion-card-subtitle class="price">€{{ prezzo().toFixed(2) }}</ion-card-subtitle>
+      } -->
+
+    </div>
+  </ion-card-header>
+
+  <ion-card-content>
+    <div class="ingredients">
+      <p class="ingredients-text">Ingredienti: {{ ingredients() }}</p>
+    </div>
+
+    <div class="actions">
+      <ion-button fill="clear" class="add-to-cart" (click)="onAddToCartClick($event)">
+        <ion-icon slot="icon-only" name="cart-outline"></ion-icon>
+        Aggiungi
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>
+
+<!-- Modale per i dettagli del prodotto -->
+<ion-modal [isOpen]="isModalOpen" (ionModalDidDismiss)="closeModal()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Dettagli Prodotto</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content">
+      <div class="product-details">
+        <div class="product-image-container">
+          <ion-img [src]="img_url()" [alt]="nome()"></ion-img>
+          @if (is_offerta()) {
+          <div class="offer-badge">
+            -{{ percentuale_offerta() }}%
+          </div>
+          }
+        </div>
+
+        <div class="product-info">
+          <h2>{{ nome() }}</h2>
+
+          <div class="price-section">
+            @if (is_offerta()) {
+            <span class="original-price">€{{ prezzo() | number:'1.2-2' }}</span>
+            <span class="discounted-price">€{{ discountedPrice | number:'1.2-2' }}</span>
+            } @else {
+            <span class="current-price">€{{ prezzo() | number:'1.2-2' }}</span>
+            }
+          </div>
+
+          @if (ingredientsList.length > 0) {
+          <div class="ingredients-section">
+            <h3>Ingredienti:</h3>
+            <div class="ingredients-list">
+              @for (ingredient of ingredientsList; track $index) {
+              <ion-chip color="primary">{{ ingredient }}</ion-chip>
+              }
+            </div>
+          </div>
+          }
+
+          <div class="quantity-section">
+            <h3>Quantità:</h3>
+            <div class="quantity-controls">
+              <ion-button fill="outline" size="small" (click)="decreaseQuantity()" [disabled]="quantity <= 1">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+
+              <div class="quantity-display">
+                {{ quantity }}
+              </div>
+
+              <ion-button fill="outline" size="small" (click)="increaseQuantity()">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+
+          <div class="notes-section">
+            <ion-item>
+              <ion-label position="stacked">Note aggiuntive (opzionale)</ion-label>
+              <ion-textarea [(ngModel)]="notes" placeholder="Es: senza cipolla, cottura al sangue..." rows="3"
+                maxlength="200">
+              </ion-textarea>
+            </ion-item>
+          </div>
+        </div>
+
+        <div class="action-buttons">
+          <ion-button expand="block" fill="outline" color="medium" (click)="closeModal()">
+            <ion-icon name="arrow-back" slot="start"></ion-icon>
+            Torna indietro
+          </ion-button>
+
+          <ion-button expand="block" color="primary" (click)="addToCart()">
+            <ion-icon name="cart" slot="start"></ion-icon>
+            Aggiungi al carrello @if (quantity > 1) {({{ quantity }})}
+          </ion-button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

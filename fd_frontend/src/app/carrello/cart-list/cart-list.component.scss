@@ -1,0 +1,329 @@
+.cart-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+    // min-height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cart-summary {
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    margin: 0;
+
+    ion-card-header {
+        background: var(--ion-color-primary);
+        color: white;
+        border-radius: 16px 16px 0 0;
+
+        ion-card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 600;
+
+            ion-icon {
+                font-size: 28px;
+            }
+        }
+    }
+
+    ion-card-content {
+        padding: 20px;
+    }
+}
+
+.empty-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+
+    .empty-icon {
+        font-size: 80px;
+        color: var(--ion-color-medium);
+        margin-bottom: 20px;
+    }
+
+    ion-text {
+        h3 {
+            color: var(--ion-color-dark);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: var(--ion-color-medium);
+            font-size: 16px;
+            margin: 0;
+        }
+    }
+}
+
+.cart-items-list {
+    margin: 0 0 24px 0;
+    padding: 0;
+    background: transparent;
+}
+
+.cart-summary-section {
+    background: var(--ion-color-light);
+    border-radius: 12px;
+    margin: 24px 0;
+    padding: 8px;
+
+    .summary-item {
+        --background: transparent;
+        --padding-start: 16px;
+        --padding-end: 16px;
+
+        ion-label h3 {
+            color: var(--ion-color-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .total-quantity {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--ion-color-primary);
+        }
+
+        .total-price {
+            font-size: 20px;
+            font-weight: 700;
+            // color: var(--ion-color-success);
+        }
+    }
+}
+
+.cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+
+    ion-button {
+        --height: 50px;
+        font-weight: 600;
+
+        &[color="danger"] {
+            --background: transparent;
+            --color: var(--ion-color-danger);
+            --border-color: var(--ion-color-danger);
+        }
+
+        &[color="primary"] {
+            --background: var(--ion-color-primary);
+            --background-hover: var(--ion-color-primary-shade);
+        }
+
+        ion-icon {
+            font-size: 20px;
+        }
+    }
+}
+
+.alert-wrapper {
+    .alert-head {
+        color: var(--ion-color-dark);
+        font-weight: 600;
+    }
+
+    .alert-message {
+        color: var(--ion-color-medium);
+        line-height: 1.4;
+    }
+
+    .alert-button {
+        &.secondary {
+            color: var(--ion-color-medium) !important;
+        }
+
+        &.danger {
+            color: var(--ion-color-danger) !important;
+            font-weight: 600;
+        }
+    }
+}
+
+.order-warning {
+    background-color: var(--ion-color-warning-tint);
+    border: 1px solid var(--ion-color-warning);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 16px 0;
+
+    ion-text {
+        p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--ion-color-warning-contrast);
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .cart-container {
+        padding: 8px;
+    }
+
+    .cart-summary {
+        border-radius: 12px;
+        margin: 0;
+
+        ion-card-header {
+            border-radius: 12px 12px 0 0;
+            ion-card-title {
+                font-size: 20px;
+                gap: 8px;
+
+                ion-icon {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        ion-card-content {
+            padding: 12px;
+        }
+    }
+
+    .cart-summary-section {
+        margin: 16px 0;
+        padding: 6px;
+
+        .summary-item {
+            --padding-start: 12px;
+            --padding-end: 12px;
+
+            ion-label h3 {
+                font-size: 14px;
+            }
+
+            .total-quantity {
+                font-size: 14px;
+            }
+
+            .total-price {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .cart-actions {
+        gap: 8px;
+        margin-top: 16px;
+
+        ion-button {
+            --height: 45px;
+            font-size: 14px;
+
+            ion-icon {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .empty-cart {
+        padding: 40px 15px;
+
+        .empty-icon {
+            font-size: 60px;
+        }
+
+        ion-text {
+            h3 {
+                font-size: 18px;
+            }
+
+            p {
+                font-size: 15px;
+            }
+        }
+    }
+}
+
+
+@media (min-width: 768px) {
+    .cart-container {
+        padding: 24px;
+    }
+
+    .cart-actions {
+        flex-direction: row;
+        justify-content: space-between;
+
+        ion-button {
+            flex: 1;
+            margin: 0 6px;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .cart-container {
+        max-width: 1000px;
+        padding: 32px;
+    }
+
+    .cart-summary {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    }
+}
+
+.status-message {
+    margin: 20px 0 20px 0;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid;
+    
+    &.success {
+        background-color: var(--ion-color-success-tint);
+        border-color: var(--ion-color-success);
+        color: var(--ion-color-success-contrast);
+        
+        .message-icon {
+            color: var(--ion-color-success);
+        }
+    }
+    
+    &.error {
+        background-color: var(--ion-color-danger-tint);
+        border-color: var(--ion-color-danger);
+        color: var(--ion-color-danger-contrast);
+        
+        .message-icon {
+            color: var(--ion-color-danger);
+        }
+    }
+    
+    .message-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        
+        .message-icon {
+            font-size: 24px;
+            min-width: 24px;
+        }
+        
+        span {
+            flex: 1;
+            font-weight: 500;
+        }
+    }
+}

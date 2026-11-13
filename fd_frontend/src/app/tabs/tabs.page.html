@@ -1,0 +1,45 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    
+
+    @if (currentRole == roles[0] || currentRole == roles[1]) { <!-- Guest e Utente Tab -->
+    <ion-tab-button tab="homepage">
+      <ion-icon aria-hidden="true" name="home-outline"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+    } @else if (currentRole == roles[2]) { <!-- Fattorino Tab -->
+    <ion-tab-button tab="ordini_fattorino" href="/user/ordini_fattorino">
+      <ion-icon aria-hidden="true" name="car-outline"></ion-icon>
+      <ion-label>Gestione Ordini</ion-label>
+    </ion-tab-button>
+    } @else if (currentRole == roles[3]) { <!-- Amministratore Tab -->
+      <ion-tab-button tab="ordini_admin" href="/user/ordini_admin">
+      <ion-icon aria-hidden="true" name="receipt-outline"></ion-icon>
+      <ion-label>Gestione Ordini</ion-label>
+    </ion-tab-button>
+    }
+
+    @if (currentRole == roles[0] || currentRole == roles[1]) { <!-- Guest e Utente Tab -->
+    <ion-tab-button tab="cart" href="/user/cart">
+      <ion-icon aria-hidden="true" name="cart-outline"></ion-icon>
+      <ion-label>Carrello</ion-label>
+    </ion-tab-button>
+    } @else if (currentRole == roles[2]) { <!-- Fattorino Tab -->
+    <ion-tab-button tab="map" href="/user/map">
+      <ion-icon aria-hidden="true" name="map-outline"></ion-icon>
+      <ion-label>Mappa</ion-label>
+    </ion-tab-button>
+    } @else if (currentRole == roles[3]) { <!-- Amministratore Tab -->
+      <ion-tab-button tab="gestione_locale" href="/user/gestione_locale">
+      <ion-icon aria-hidden="true" name="cog-outline"></ion-icon>
+      <ion-label>Gestione Locale</ion-label>
+    </ion-tab-button>
+    }
+
+
+    <ion-tab-button tab="profile" (click)="gestisciClickProfile()">
+      <ion-icon aria-hidden="true" name="person-circle-outline"></ion-icon>
+      <ion-label>{{ isLoggedIn ? 'Dashboard' : 'Accedi'}}</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

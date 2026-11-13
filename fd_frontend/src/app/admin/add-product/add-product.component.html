@@ -1,0 +1,100 @@
+<div class="form-center-box">
+  <form [formGroup]="addProductForm" (ngSubmit)="onAddSubmit()">
+    <div class="form-container box-shadows">
+      <div class="input-group">
+        <ion-item>
+          <ion-input type="text" placeholder="Nome Prodotto" formControlName="nome"></ion-input>
+          @if (addProductForm.get('nome')?.touched && addProductForm.get('nome')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="Prezzo" formControlName="prezzo"></ion-input>
+          @if (addProductForm.get('prezzo')?.touched && addProductForm.get('prezzo')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="URL Immagine" formControlName="url_immagine"></ion-input>
+          @if (addProductForm.get('url_immagine')?.touched && addProductForm.get('url_immagine')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Categoria</ion-label>
+          <ion-select formControlName="categoria" placeholder="Seleziona categoria">
+            @for (item of categories; track $index) {
+            <ion-select-option [value]="item.id">{{ item.name }} (ID: {{item.id}})</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-input type="text" placeholder="Percentuale Sconto" formControlName="percentuale_sconto"></ion-input>
+          @if (addProductForm.get('percentuale_sconto')?.touched && addProductForm.get('percentuale_sconto')?.invalid) {
+          <span class="validation-icon-span"><ion-icon name="close" slot="end" color="danger"
+              class="validation-icon"></ion-icon></span>
+          }
+        </ion-item>
+
+        <ion-item>
+          <div style="width: 100%;">
+            <div class="ingredient-item">
+              <ion-label>Ingredienti: </ion-label>
+              <ion-button id="open-modal" placeholder="ingredienti">Seleziona Ingredienti</ion-button>
+            </div>
+            <div class="ingredient-list">
+              @for (item of selectedIngredients; track $index) {
+                <span class="ingredient-bubble">
+                  {{item.name}}
+                </span>
+              }
+              @if (selectedIngredients.length === 0) {
+                <span class="ingredient-vuoto">Nessun ingrediente selezionato</span>
+              }
+            </div>
+          </div>
+        </ion-item>
+
+        <!-- <ion-item>
+          <ion-label>
+            @for (item of selectedIngredients; track $index) {
+            {{item.id}} - {{item.name}}
+            }
+          </ion-label>
+        </ion-item> -->
+
+        <app-ingredient-modal (ingredientsSelected)="onIngredientsSelected($event)"></app-ingredient-modal>
+
+      </div>
+
+      <div class="button-group">
+        <ion-button type="submit" expand="block" [disabled]="!addProductForm.valid || isLoading">
+          @if (isLoading) {
+          Aggiunta in corso...
+          } @else {
+          Aggiungi
+          }
+        </ion-button>
+
+        <ion-button type="button" expand="block" fill="clear" color="medium" (click)="goBack()">
+          Torna indietro
+        </ion-button>
+      </div>
+
+      <!-- Messaggio di errore del login -->
+      @if (statusMessage) {
+      <div class="status-message">
+        {{ statusMessage }}
+      </div>
+      }
+    </div>
+    <!-- <p>{{prodottoAggiunto}}</p> -->
+  </form>
+</div>

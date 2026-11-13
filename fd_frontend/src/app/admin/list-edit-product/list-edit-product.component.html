@@ -1,0 +1,61 @@
+<div class="container">
+  <!-- Mostra la lista dei prodotti se non è in modalità modifica -->
+  @if (!showEditForm) {
+  <!-- Pulsante Torna indietro -->
+  <div class="back-button-container">
+    <ion-button fill="solid" color="medium" (click)="goBackToGestione()">
+      <ion-icon name="arrow-back" slot="start"></ion-icon>
+      Torna Indietro
+    </ion-button>
+  </div>
+
+  <div class="header">
+    <h2>Modifica Prodotti</h2>
+  </div>
+
+  <!-- Lista dei prodotti -->
+  @if (!isLoading && products.length > 0) {
+  <ion-list>
+    @for (product of products; track product.ID_prodotto) {
+    <ion-item>
+      <ion-label>
+        <h3>{{ product.nome_prodotto }}</h3>
+        <p>Prezzo: {{ product.prezzo }}€</p>
+        <p>ID: {{ product.ID_prodotto }}</p>
+      </ion-label>
+      <ion-button 
+        color="primary" 
+        fill="outline" 
+        slot="end"
+        (click)="editProduct(product)"
+        [disabled]="isLoading">
+        Modifica
+      </ion-button>
+    </ion-item>
+    }
+  </ion-list>
+  }
+
+  @if (!isLoading && products.length === 0) {
+  <div class="empty-state">
+    <p>Nessun prodotto disponibile</p>
+  </div>
+  }
+
+  <!-- Messaggio di status -->
+  @if (statusMessage) {
+  <div class="status-message">
+    {{ statusMessage }}
+  </div>
+  }
+  }
+
+  <!-- Mostra il form di modifica quando un prodotto è selezionato -->
+  @if (showEditForm && selectedProduct) {
+  <app-edit-product 
+    [product]="selectedProduct"
+    (productUpdated)="onProductUpdated()"
+    (editCanceled)="onEditCanceled()">
+  </app-edit-product>
+  }
+</div>

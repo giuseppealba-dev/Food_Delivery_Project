@@ -1,0 +1,171 @@
+/* Admin Dashboard Styles */
+
+.dashboard-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 20px 0;
+  
+  h1 {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    margin: 0;
+    font-weight: 300;
+  }
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.dashboard-section {
+  margin: 0;
+  border-radius: 0.5rem;
+  
+  @media (max-width: 480px) {
+    --border-radius: 15px;
+  }
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #2c3e50;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0;
+  
+  ion-icon {
+    font-size: 1.6rem;
+    color: #3498db;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    
+    ion-icon {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dashboard-btn {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  height: 50px;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  
+  ion-icon {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    height: 45px;
+    font-size: 0.9rem;
+    
+    ion-icon {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.primary-btn {
+  --background: #667eea;
+  --color: #ffffff;
+}
+
+.secondary-btn {
+  --background: #9070d0;
+  --color: #ffffff;
+}
+
+.danger-btn {
+  --background: #ff9a9e;
+  --color: #c0392b;
+}
+
+.dashboard-btn:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .dashboard-container {
+    padding: 15px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 2.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 10px;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 30px;
+    
+    h1 {
+      font-size: 2rem;
+    }
+    
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 8px;
+  }
+  
+  .dashboard-header {
+    margin-bottom: 25px;
+    
+    h1 {
+      font-size: 1.8rem;
+    }
+    
+    .subtitle {
+      font-size: 0.9rem;
+    }
+  }
+  
+  .button-group {
+    gap: 12px;
+  }
+}

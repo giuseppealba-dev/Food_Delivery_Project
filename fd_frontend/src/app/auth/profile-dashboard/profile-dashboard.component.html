@@ -1,0 +1,50 @@
+<div class="dashboard-container">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Dashboard Profilo</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      @if (user) {
+      <div class="user-info">
+        <h3>Benvenuto!</h3>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        @if (user.nome) {
+        <p><strong>Nome:</strong> {{ user.nome }}</p>
+        }
+        @if (user.cognome) {
+        <p><strong>Cognome:</strong> {{ user.cognome }}</p>
+        }
+        @if (user.numero_telefono) {
+        <p><strong>Telefono:</strong> {{ user.numero_telefono }}</p>
+        }
+      </div>
+      } @else {
+      <div class="no-user-info">
+        <p>Caricamento informazioni utente...</p>
+      </div>
+      }
+
+      <div class="actions">
+        @if (currentRole == roles[1]) { <!-- Utente -->
+        <ion-button expand="block" color="primary" (click)="storicoOrdini()">
+          <ion-icon name="list-outline" slot="start"></ion-icon>
+          Storico Ordini
+        </ion-button>
+        <ion-button expand="block" color="primary" (click)="listIndirizzi()">
+          <ion-icon name="footsteps-outline" slot="start"></ion-icon>
+          Indirizzi di Consegna
+        </ion-button>
+        }
+        <ion-button expand="block" fill="outline" color="primary" (click)="editPassword()">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          Modifica Password
+        </ion-button>
+        <ion-button expand="block" color="danger" (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          Logout
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>

@@ -1,0 +1,42 @@
+<div class="products-container">
+  <!-- <h3 class="title">Lista Prodotti</h3> -->
+
+  <!-- ! PER DEBUG -->
+  <!-- <div class="category-info">
+    @if (selectedCategoryId !== null) {
+    <p>Categoria selezionata: <strong>{{ selectedCategoryId }}</strong></p>
+    } @else {
+    <p>Mostrando tutti i prodotti</p>
+    }
+  </div> -->
+
+  <div class="search-container">
+    <ion-item>
+      <ion-input label="Cerca prodotti" labelPlacement="stacked" type="text"
+        placeholder="Es: pizza margherita, pasta..." [(ngModel)]="searchTerm" (ionInput)="filterProductsByName($event)"
+        clearInput="true">
+      </ion-input>
+    </ion-item>
+  </div>
+
+  <div class="products-list">
+    <!-- <p>I prodotti verranno caricati qui...</p> -->
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        @for (item of filteredProducts; track $index) {
+        <ion-col size="12" size-md="6" size-lg="4" size-xl="3" >
+          <app-product-card 
+          [id]="item.product.ID_prodotto"
+          [nome]="item.product.nome_prodotto"
+          [prezzo]="item.product.prezzo"
+          [img_url]="item.product.url_immagine"
+          [is_offerta]="item.product.is_offerta"
+          [percentuale_offerta]="item.product.percentuale_offerta"
+          [ingredients]="item.ingredients.join(', ')">
+        </app-product-card>
+        </ion-col>
+        }
+      </ion-row>
+    </ion-grid>
+  </div>
+</div>

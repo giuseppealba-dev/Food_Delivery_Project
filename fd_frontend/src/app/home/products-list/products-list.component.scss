@@ -1,0 +1,133 @@
+.products-container {
+    padding: 16px;
+
+    h3.title {
+        margin-bottom: 16px;
+        font-weight: 600;
+        // color: var(--ion-color-primary);
+        text-align: center;
+        font-size: 1.5rem;
+    }
+}
+
+.tidwadawtle {
+
+    font-weight: 600;
+    // color: var(--ion-color-primary);
+    margin-bottom: 16px;
+
+}
+
+.category-info {
+    margin-bottom: 8px;
+    padding: 12px;
+    background: var(--ion-color-light);
+    border-radius: 8px;
+
+    p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--ion-color-medium);
+
+        strong {
+            color: var(--ion-color-dark);
+        }
+    }
+}
+
+.search-container {
+    position: sticky;
+    top: 70px;
+    /* Posiziona sotto il categorie-scroll che è alto circa 70px */
+    z-index: 99;
+    // background: var(--ion-background-color);
+    padding: 8px 0 0px 0;
+    margin-bottom: 8px;
+    // margin-bottom: 0.5rem;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    // border-bottom:  1px solid var(--ion-color-light-shade);
+
+    ion-item {
+        --background: var(--ion-color-light);
+        --border-radius: 12px;
+        --inner-padding-end: 16px;
+        --inner-padding-start: 16px;
+        --padding-start: 0;
+        --padding-end: 0;
+        margin-bottom: 8px;
+
+        ion-input {
+            --placeholder-color: var(--ion-color-medium);
+            --color: var(--ion-color-dark);
+
+            &::part(native) {
+                border-radius: 8px;
+            }
+        }
+    }
+}
+
+.products-list {
+    margin-top: 8px;
+
+    ion-grid {
+        padding: 0;
+    }
+
+    ion-row {
+        margin: 0;
+    }
+
+    ion-col {
+        padding: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: stretch; // Cambiato da center a stretch
+        
+        app-product-card {
+            width: 100%;
+            max-width: 400px; // Limita la larghezza massima
+        }
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .products-container {
+        padding: 12px;
+    }
+
+    .search-container {
+        top: 65px;
+        padding: 12px 0 6px 0;
+
+        ion-item {
+            --inner-padding-end: 12px;
+            --inner-padding-start: 12px;
+        }
+    }
+
+    .products-list ion-col {
+        padding: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-container {
+        padding: 8px;
+    }
+
+    .search-container {
+        top: 60px;
+        padding: 10px 0 4px 0;
+    }
+
+    .category-info {
+        padding: 8px;
+
+        p {
+            font-size: 0.85rem;
+        }
+    }
+}

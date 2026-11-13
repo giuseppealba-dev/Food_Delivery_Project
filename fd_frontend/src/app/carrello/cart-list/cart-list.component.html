@@ -1,0 +1,120 @@
+<div class="cart-container">
+  <ion-card class="cart-summary">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="cart-outline"></ion-icon>
+        Il Tuo Carrello
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      @if (isCartEmpty()) {
+      <div class="empty-cart">
+        <ion-icon name="cart-outline" class="empty-icon"></ion-icon>
+        <ion-text>
+          <h3>Il carrello è vuoto</h3>
+          <p>Aggiungi alcuni prodotti per iniziare!</p>
+        </ion-text>
+      </div>
+      } @else {
+      <!-- Lista degli elementi del carrello -->
+      <ion-list class="cart-items-list">
+        @for (item of carrelloService.cartItems(); track item.id_prodotto + '-' + (item.notes || '')) {
+        <app-cart-element [cartItem]="item" (increaseQuantity)="onIncreaseQuantity($event)"
+          (decreaseQuantity)="onDecreaseQuantity($event)" (removeItem)="onRemoveItem($event)">
+        </app-cart-element>
+        }
+      </ion-list>
+
+      <!-- Riepilogo totale -->
+      <div class="cart-summary-section">
+        <ion-item class="summary-item">
+          <ion-label>
+            <h3>Quantità totale:</h3>
+          </ion-label>
+          <ion-text slot="end" class="total-quantity">
+            {{ carrelloService.cartCount() }} elementi
+          </ion-text>
+        </ion-item>
+
+        <ion-item class="summary-item">
+          <ion-label>
+            <h3>Prezzo totale:</h3>
+          </ion-label>
+          <ion-text slot="end" class="total-price">
+            {{ carrelloService.totalPrice() | currency:'EUR':'symbol':'1.2-2' }}
+          </ion-text>
+        </ion-item>
+      </div>
+
+      @if (!canEffettuaOrdine) {
+      <div class="order-warning">
+        <ion-text color="warning">
+          <p><strong>Nota:</strong> Devi essere loggato per poter effettuare un ordine.</p>
+        </ion-text>
+      </div>
+      }
+
+      <div class="cart-actions">
+        <ion-button expand="block" fill="outline" color="danger" (click)="showClearCartConfirmation()">
+          <ion-icon name="trash" slot="start"></ion-icon>
+          Svuota Carrello
+        </ion-button>
+
+        <ion-button expand="block" fill="outline" color="primary" (click)="selectIndirizzo()" [disabled]="!canEffettuaOrdine">
+          <ion-icon name="map-outline" slot="start"></ion-icon>
+          @if (selectedIndirizzo) {
+            Indirizzo: {{ selectedIndirizzo.via }}, {{ selectedIndirizzo.numero_civico }}
+          } @else {
+            Seleziona Indirizzo
+          }
+        </ion-button>
+
+        <ion-button expand="block" color="primary" (click)="effettuaOrdine()" [disabled]="!canEffettuaOrdine || !selectedIndirizzo || isEffettuaOrdine">
+          <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+          @if (isEffettuaOrdine) {
+            Elaborazione...
+          } @else {
+            Effettua Ordine
+          }
+        </ion-button>
+      </div>
+      }
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Messaggio di stato -->
+    @if (statusMessage) {
+    <div class="status-message" [class.success]="isSuccess" [class.error]="!isSuccess">
+      <ion-text>
+        <div class="message-content">
+          <ion-icon [name]="isSuccess ? 'checkmark-circle' : 'alert-circle'" class="message-icon"></ion-icon>
+          <span>{{ statusMessage }}</span>
+        </div>
+      </ion-text>
+    </div>
+    }
+
+  <!-- Alert di conferma per svuotare il carrello -->
+  <ion-alert
+    [isOpen]="showClearConfirmation"
+    header="Conferma svuotamento"
+    message="Sei sicuro di voler svuotare completamente il carrello? Questa azione non può essere annullata."
+    [buttons]="[
+      {
+        text: 'Annulla',
+        role: 'cancel',
+        cssClass: 'secondary'
+      },
+      {
+        text: 'Svuota',
+        role: 'confirm',
+        cssClass: 'danger'
+      }
+    ]"
+    (didDismiss)="handleAlertResponse($event)">
+  </ion-alert>
+
+  <!-- Modale per la selezione degli indirizzi -->
+  <app-indirizzi-modal (indirizzoSelected)="onIndirizzoSelected($event)"></app-indirizzi-modal>
+</div>

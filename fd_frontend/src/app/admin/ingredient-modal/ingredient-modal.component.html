@@ -1,0 +1,31 @@
+<!-- modale -->
+<ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input label="Cerca Ingredienti" labelPlacement="stacked" type="text" placeholder="Nome ingrediente"
+          [(ngModel)]="searchTerm" (ionInput)="filterIngredients($event)"></ion-input>
+      </ion-item>
+      @for (item of filteredIngredients; track $index) {
+      <ion-item>
+        <ion-checkbox 
+          [(ngModel)]="item.selected" 
+          (ionChange)="onIngredientSelectionChange(item)">
+          ID: {{item.id}} - {{item.name}}
+        </ion-checkbox>
+      </ion-item>
+      }
+    </ion-content>
+  </ng-template>
+</ion-modal>
