@@ -154,5 +154,3 @@ Progetto universitario funzionante per scopi didattici e dimostrativi.
 La build del frontend è completata correttamente e le principali API del
 backend rispondono in ambiente locale.
 
-Sono ancora presenti alcuni problemi di qualità del codice rilevati dal lint
-frontend e lo script di test del backend non è stato configurato.
